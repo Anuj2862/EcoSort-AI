@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Sorting AI - Smart Recycling Assistant</title>
+    <meta name="description" content="AI-powered waste classification system for smart recycling">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recyclability.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category_badge.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>♻️ Waste Sorting AI</h1>
+            <p class="subtitle">Smart Classification for a Greener Planet</p>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalScans">0</span>
+                    <span class="stat-label">Total Scans</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="thisWeek">0</span>
+                    <span class="stat-label">This Week</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="achievements">0</span>
+                    <span class="stat-label">Achievements</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="classify">🔍 Classify</button>
+            <button class="tab-btn" data-tab="history">📸 History</button>
+            <button class="tab-btn" data-tab="achievements">🏆 Achievements</button>
+            <button class="tab-btn" data-tab="stats">📊 Stats</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Classify Tab -->
+            <div class="tab-pane active" id="classifyTab">
+                <!-- Upload Section -->
+                <section class="upload-section glass-card">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📸</div>
+                        <p class="upload-text">Drop your image here</p>
+                        <p class="upload-hint">or click to browse (PNG, JPG, JPEG)</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+
+                    <!-- Image Quality Feedback -->
+                    <div class="quality-feedback" id="qualityFeedback" style="display: none;">
+                        <h4>📋 Image Quality Check</h4>
+                        <div id="qualityMessages"></div>
+                    </div>
+                </section>
+
+                <!-- Preview Section -->
+                <section class="preview-section" id="previewSection">
+                    <div class="glass-card">
+                        <h2>Preview</h2>
+                        <div class="image-preview-container">
+                            <img id="imagePreview" alt="Preview">
+                        </div>
+                        <div class="button-group" style="justify-content: center;">
+                            <button class="btn btn-primary" id="classifyBtn">
+                                🔍 Classify Waste
+                            </button>
+                            <button class="btn btn-secondary" id="resetBtn">
+                                🔄 Upload Another
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Loading Section -->
+                <section class="loading" id="loadingSection">
+                    <div class="spinner"></div>
+                    <p>Analyzing your waste...</p>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection">
+                    <div class="glass-card">
+                        <div class="result-header">
+                            <h2>Classification Result</h2>
+                            <div class="category-badge" id="categoryBadge">PLASTIC</div>
+                        </div>
+
+                        <div class="disposal-instructions" id="disposalInstructions">
+                            <!-- Confidence, fun facts, and instructions will be inserted here -->
+                        </div>
+
+                        <!-- NEW: Recyclability Badge (moved to bottom) -->
+                        <div class="recyclability-badge" id="recyclabilityBadge" style="display: none;">
+                            <div class="recyclable-icon">♻️</div>
+                            <div class="recyclable-status">RECYCLABLE</div>
+                            <div class="recyclable-confidence">92% confidence</div>
+                            <p class="recyclable-reason">Clean plastic - recyclable</p>
+                        </div>
+
+                        <!-- NEW: Eco-Score (moved to bottom) -->
+                        <div class="eco-score-container" id="ecoScoreContainer" style="display: none;">
+                            <h4>🌍 Eco-Score</h4>
+                            <div class="eco-score-meter">
+                                <div class="eco-score-fill" id="ecoScoreFill" style="width: 0%;"></div>
+                            </div>
+                            <p class="eco-score-value" id="ecoScoreValue">0/100</p>
+                        </div>
+
+                        <!-- Achievement Notification -->
+                        <div class="achievement-notification" id="achievementNotification" style="display: none;">
+                            <h3>🎉 Achievement Unlocked!</h3>
+                            <div id="achievementContent"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-pane" id="historyTab">
+                <div class="glass-card">
+                    <h2>📸 Classification History</h2>
+                    <div class="history-grid" id="historyGrid">
+                        <p class="empty-state">No classifications yet. Start by uploading an image!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Tab -->
+            <div class="tab-pane" id="achievementsTab">
+                <div class="glass-card">
+                    <h2>🏆 Your Achievements</h2>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <!-- Achievement cards will be inserted here -->
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🌱</div>
+                            <h3>First Scan</h3>
+                            <p>Classify your first item</p>
+                            <span class="achievement-status">Locked</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">♻️</div>
+                            <h3>Eco Newbie</h3>
+                            <p>Classify 10 items</p>
+                            <span class="achievement-status">Locked</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🦸</div>
+                            <h3>Recycling Hero</h3>
+                            <p>Classify 50 items</p>
+                            <span class="achievement-status">Locked</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🌍</div>
+                            <h3>Planet Protector</h3>
+                            <p>Classify 100 items</p>
+                            <span class="achievement-status">Locked</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🧙</div>
+                            <h3>Waste Wizard</h3>
+                            <p>Classify 500 items</p>
+                            <span class="achievement-status">Locked</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Tab -->
+            <div class="tab-pane" id="statsTab">
+                <div class="glass-card">
+                    <h2>📊 Your Impact</h2>
+
+                    <div class="stats-section">
+                        <h3>Classification Breakdown</h3>
+                        <div class="category-stats" id="categoryStats">
+                            <!-- Category breakdown will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="stats-section">
+                        <h3>Environmental Impact</h3>
+                        <div class="impact-stats" id="impactStats">
+                            <div class="impact-card">
+                                <div class="impact-icon">🌳</div>
+                                <div class="impact-value" id="treesSaved">0</div>
+                                <div class="impact-label">Trees Saved</div>
+                            </div>
+                            <div class="impact-card">
+                                <div class="impact-icon">💧</div>
+                                <div class="impact-value" id="waterSaved">0L</div>
+                                <div class="impact-label">Water Saved</div>
+                            </div>
+                            <div class="impact-card">
+                                <div class="impact-icon">⚡</div>
+                                <div class="impact-value" id="energySaved">0kWh</div>
+                                <div class="impact-label">Energy Saved</div>
+                            </div>
+                            <div class="impact-card">
+                                <div class="impact-icon">🌫️</div>
+                                <div class="impact-value" id="co2Saved">0kg</div>
+                                <div class="impact-label">CO2 Reduced</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

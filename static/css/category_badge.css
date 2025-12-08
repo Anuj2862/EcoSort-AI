@@ -1,0 +1,128 @@
+/* ==================== CATEGORY BADGE (DYNAMIC \u0026 CURVED) ==================== */
+.category-badge {
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    font-size: 2rem;
+    font-weight: 800;
+    border-radius: 50px;
+    /* Curved/pill shape */
+    margin: 1.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: badgePulse 2s ease-in-out infinite, fadeInScale 0.6s ease-out;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.category-badge::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+}
+
+.category-badge:hover {
+    transform: scale(1.05) rotate(-2deg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Category-specific colors */
+.category-badge.category-metal {
+    background: linear-gradient(135deg, #8e9eab 0%, #eef2f3 100%);
+    color: #333;
+}
+
+.category-badge.category-paper {
+    background: linear-gradient(135deg, #d4a574 0%, #e8c89e 100%);
+    color: #333;
+}
+
+.category-badge.category-plastic {
+    background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+    color: #333;
+}
+
+.category-badge.category-glass {
+    background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);
+    color: white;
+}
+
+.category-badge.category-trash {
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+    color: white;
+}
+
+.category-badge.category-food_waste {
+    background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+    color: white;
+}
+
+.category-badge.category-e_waste {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+    color: white;
+}
+
+.category-badge.category-textiles {
+    background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+    color: white;
+}
+
+.category-badge.category-hazardous {
+    background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+    color: white;
+}
+
+.category-badge.category-medical {
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 0 30px rgba(86, 171, 47, 0.4);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .category-badge {
+        font-size: 1.5rem;
+        padding: 1rem 2rem;
+    }
+}

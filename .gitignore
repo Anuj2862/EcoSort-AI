@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Model files (optional - uncomment if you don't want to track the model)
+# *.h5
+# *.keras
+
+# Uploaded images
+uploaded_pictures/*
+!uploaded_pictures/.gitkeep
+static/uploads/*
+!static/uploads/.gitkeep
+
+# Training checkpoints
+*.keras
+waste_sorting_model.keras
+final_waste_sorting_model.keras
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+tempCodeRunnerFile.*
+*.tmp
+
+# Environment variables (API keys)
+.env
+
+# Large datasets and zip files
+*.zip
+dataset/
+dataset_model2/
+extracted_dataset/
+extracted_dataset2/
+archive/
+
+# User content
+waste_sorting.db
+uploaded_pictures/
+static/uploads/
+
+# Python/Environment
+venv/
+__pycache__/
+*.pyc
