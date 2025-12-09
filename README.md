@@ -313,10 +313,7 @@ Detailed 3-step instructions for each category:
 - [ ] Barcode scanning
 - [ ] Location-based recycling centers
 - [ ] Social sharing features
-- [ ] Weekly recycling reports
-- [ ] Custom mascot character
-- [ ] AR visualization
-- [ ] Community challenges
+
 
 ---
 
